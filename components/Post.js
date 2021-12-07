@@ -28,7 +28,6 @@ import { useRecoilState } from "recoil";
 // import { modalState, postIdState } from "../atoms/modalAtom";
 import { db } from "../firebase";
 
-
 function Post({ id, post, postPage }) {
   const { data: session } = useSession();
   // const [isOpen, setIsOpen] = useRecoilState(modalState);
@@ -112,11 +111,11 @@ function Post({ id, post, postPage }) {
               <div className="icon group-hover:bg-[#1d9bf0] group-hover:bg-opacity-10">
                 <ChatIcon className="h-5 group-hover:text-[#1d9bf0]" />
               </div>
-              {/* {comments.length > 0 && (
+              {comments.length > 0 && (
                 <span className="group-hover:text-[#1d9bf0] text-sm">
                   {comments.length}
                 </span>
-              )} */}
+              )}
             </div>
 
             {session.user.uid === post?.id ? (
@@ -148,13 +147,13 @@ function Post({ id, post, postPage }) {
               // }}
             >
               <div className="icon group-hover:bg-pink-600/10">
-                {/* {liked ? (
+                {liked ? (
                   <HeartIconFilled className="h-5 text-pink-600" />
                 ) : (
                   <HeartIcon className="h-5 group-hover:text-pink-600" />
-                )} */}
+                )}
               </div>
-              {/* {likes.length > 0 && (
+              {likes.length > 0 && (
                 <span
                   className={`group-hover:text-pink-600 text-sm ${
                     liked && "text-pink-600"
@@ -162,7 +161,7 @@ function Post({ id, post, postPage }) {
                 >
                   {likes.length}
                 </span>
-              )} */}
+              )}
             </div>
 
             <div className="icon group">
