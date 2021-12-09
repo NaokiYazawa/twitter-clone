@@ -88,7 +88,9 @@ function Post({ id, post, postPage }) {
             </div>
           </div>
           {postPage && (
-            <p className="text-[#d9d9d9] mt-0.5 text-xl">{post?.text}</p>
+            <p className="text-[#d9d9d9] mt-0.5 text-xl">
+              {post?.text}
+            </p>
           )}
           <img
             src={post?.image}
