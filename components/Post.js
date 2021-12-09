@@ -37,6 +37,22 @@ function Post({ id, post, postPage }) {
   const [liked, setLiked] = useState(false);
   const router = useRouter();
 
+  useEffect(
+    () =>
+      onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
+        setLikes(snapshot.docs)
+      ),
+    [db, id]
+  );
+
+  useEffect(
+    () =>
+      setLiked(
+        likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+      ),
+    [likes]
+  );
+
   const likePost = async () => {
     if (liked) {
       await deleteDoc(doc(db, "posts", id, "likes", session.user.uid))
@@ -156,7 +172,7 @@ function Post({ id, post, postPage }) {
               className="flex items-center space-x-1 group"
               onClick={(e) => {
                 e.stopPropagation();
-                // likePost();
+                likePost();
               }}
             >
               <div className="icon group-hover:bg-pink-600/10">
