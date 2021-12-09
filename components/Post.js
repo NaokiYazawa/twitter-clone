@@ -25,17 +25,28 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
 import { useRecoilState } from "recoil";
-// import { modalState, postIdState } from "../atoms/modalAtom";
+import { modalState, postIdState } from "../atoms/modalAtom";
 import { db } from "../firebase";
 
 function Post({ id, post, postPage }) {
   const { data: session } = useSession();
-  // const [isOpen, setIsOpen] = useRecoilState(modalState);
-  // const [postId, setPostId] = useRecoilState(postIdState);
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const [postId, setPostId] = useRecoilState(postIdState);
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
   const [liked, setLiked] = useState(false);
   const router = useRouter();
+
+  const likePost = async () => {
+    if (liked) {
+      await deleteDoc(doc(db, "posts", id, "likes", session.user.uid))
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+        username: session.user.name,
+      });
+    }
+  }
+
   return (
     <div>
       <div
@@ -104,11 +115,11 @@ function Post({ id, post, postPage }) {
           >
             <div
               className="flex items-center space-x-1 group"
-              // onClick={(e) => {
-              //   e.stopPropagation();
-              //   setPostId(id);
-              //   setIsOpen(true);
-              // }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setPostId(id);
+                setIsOpen(true);
+              }}
             >
               <div className="icon group-hover:bg-[#1d9bf0] group-hover:bg-opacity-10">
                 <ChatIcon className="h-5 group-hover:text-[#1d9bf0]" />
@@ -123,11 +134,11 @@ function Post({ id, post, postPage }) {
             {session.user.uid === post?.id ? (
               <div
                 className="flex items-center space-x-1 group"
-                // onClick={(e) => {
-                //   e.stopPropagation();
-                //   deleteDoc(doc(db, "posts", id));
-                //   router.push("/");
-                // }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteDoc(doc(db, "posts", id));
+                  router.push("/");
+                }}
               >
                 <div className="icon group-hover:bg-red-600/10">
                   <TrashIcon className="h-5 group-hover:text-red-600" />
@@ -143,10 +154,10 @@ function Post({ id, post, postPage }) {
             
             <div
               className="flex items-center space-x-1 group"
-              // onClick={(e) => {
-              //   e.stopPropagation();
-              //   likePost();
-              // }}
+              onClick={(e) => {
+                e.stopPropagation();
+                // likePost();
+              }}
             >
               <div className="icon group-hover:bg-pink-600/10">
                 {liked ? (
