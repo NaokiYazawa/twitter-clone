@@ -11,8 +11,9 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import Modal from "../components/Modal";
+import Login from "../components/Login";
 import Sidebar from "../components/Sidebar";
-// import Widgets from "../components/Widgets";
+import Widgets from "../components/Widgets";
 import Post from "../components/Post";
 import { db } from "../firebase";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
@@ -83,10 +84,10 @@ function PostPage() {
             </div>
           )}
         </div>
-        {/* <Widgets
+        <Widgets
           trendingResults={trendingResults}
           followResults={followResults}
-        /> */}
+        />
 
         {isOpen && <Modal />}
       </main>
